@@ -152,15 +152,18 @@ class SimpleEpitran(object):
             we are looking at. If this returns False, then the word
             is very likely to contain some sprurious symbol that is
             not getting converted to IPA. """
+
         text = unicode(text)
         text = self.strip_diacritics.process(text)
         text = unicodedata.normalize('NFC', text.lower())
-        if not self._all_matches(text):
-            if self.preproc:
-                text = self.preprocessor.process(text)
-            if not self._all_matches(text):
-                return False
-        return True
+        pure_before_preprocess = self._all_matches(text)
+        if self.preproc:
+            text = self.preprocessor.process(text)
+            pure_after_preprocess = self._all_matches(text)
+        else:
+            pure_after_preprocess = pure_before_preprocess
+
+        return pure_after_preprocess or pure_before_preprocess
                 
         
 
