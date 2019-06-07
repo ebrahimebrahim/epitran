@@ -129,6 +129,42 @@ class SimpleEpitran(object):
         graphemes = sorted(g2p_keys, key=len, reverse=True)
         return re.compile(r'({})'.format(r'|'.join(graphemes)), re.I)
 
+
+    def _all_matches(self, text):
+        """ Carry out the main loop that general_trans carries out,
+            and check that no bits are passed over by the loop 
+            and not converted to IPA"""
+        while text:
+            m = self.regexp.match(text)
+            if m:
+                source = m.group(0)
+                text = text[len(source):]
+            else:
+                return False
+        return True
+
+
+
+    def check_purity(self, text):
+        """ Determine whether there are any spurious symbols that are passed over
+            in the transliteration to IPA. If this returns True
+            then the word is definitely a pure word of the language
+            we are looking at. If this returns False, then the word
+            is very likely to contain some sprurious symbol that is
+            not getting converted to IPA. """
+        text = unicode(text)
+        text = self.strip_diacritics.process(text)
+        text = unicodedata.normalize('NFC', text.lower())
+        if not self._all_matches(text):
+            if self.preproc:
+                text = self.preprocessor.process(text)
+            if not self._all_matches(text):
+                return False
+        return True
+                
+        
+
+
     def general_trans(self, text, filter_func,
                       normpunc=False, ligatures=False):
         """Transliaterates a word into IPA, filtering with filter_func
