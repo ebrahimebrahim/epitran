@@ -127,7 +127,8 @@ class SimpleEpitran(object):
            the mapping table.
         """
         graphemes = sorted(g2p_keys, key=len, reverse=True)
-        return re.compile(r'({})'.format(r'|'.join(graphemes)), re.I)
+        return re.compile(r'({})'.format(r'|'.join(graphemes))) # I deleted re.I as a flag here. We do not need to ignore case since we convert everything to lowercase anyway.
+                                                                # In weird cases where ſ appeared in text data, it was treated by re.I as a capital 's' of some kind.
 
 
     def _all_matches(self, text):
