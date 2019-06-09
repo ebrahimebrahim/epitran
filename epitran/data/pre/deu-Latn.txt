@@ -1,6 +1,9 @@
 ::vowel:: = aäeioöuü
 ::consonant:: = b|c|ch|ck|d|dt|f|g|h|j|k|l|m|n|p|pf|r|s|sch|t|tsch|tz|tzsch|v|w|z
 
+% -tion for Latin loanwords
+t -> ts / _ ion
+
 % Initial voicing of <s>
 s -> z / # _ [::vowel::]
 
@@ -9,14 +12,25 @@ b -> p / _ #|(::consonant::)[::vowel::]
 d -> t / _ #|(::consonant::)[::vowel::]
 g -> k / _ #|(::consonant::)[::vowel::]
 
+% Handling of r
+r -> 0 / e _ #
+r -> ə / [äeioöuü]h? _ #|(::consonant::)
+r -> 0 / a _ #|(::consonant::)
+r -> ʁ / # _
+r -> ʀ / [::vowel::]h? _ [::vowel::]
+r -> ʁ / (::consonant::) _ [::vowel::]
+
+% r should never appear between consonants but just in case... we also don't want r showing up ever
+r -> 0 / _
+
 % Final schwa
 e -> ə / _ #
 
 % Open syllable lengthening
-i -> ie / _ #|(::consonant::)[::vowel::]
-e -> ee / _ #|(::consonant::)[::vowel::]
-ü -> üh / _ #|(::consonant::)[::vowel::]
-ö -> öo / _ #|(::consonant::)[::vowel::]
-u -> uh / _ #|(::consonant::)[::vowel::]
-o -> oo / _ #|(::consonant::)[::vowel::]
-a -> aa / _ #|(::consonant::)[::vowel::]
+i -> ie / [^i] _ #|(::consonant::)[::vowel::]
+e -> ee / [^e] _ #|(::consonant::)[::vowel::]
+ü -> üh / [^ü] _ #|(::consonant::)[::vowel::]
+ö -> öo / [^ö] _ #|(::consonant::)[::vowel::]
+u -> uh / [^u] _ #|(::consonant::)[::vowel::]
+o -> oo / [^o] _ #|(::consonant::)[::vowel::]
+a -> aa / [^a] _ #|(::consonant::)[::vowel::]
