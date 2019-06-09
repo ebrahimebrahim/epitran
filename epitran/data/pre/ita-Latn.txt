@@ -1,4 +1,3 @@
-% Palatalization
 cci -> t͡ʃː / _ [aeou]
 ci -> t͡ʃ / _ [aeou]
 ggi -> d͡ʒː / _ [aeou]
@@ -7,3 +6,5 @@ cc -> t͡ʃː / _ [ie]
 c -> t͡ʃ / _ [ie]
 gg -> d͡ʒː / _ [ie]
 g -> d͡ʒ / _ [ie]
+
+' -> 0 / _
